@@ -25,14 +25,27 @@ Vue.component('column', {
     }
 },
 mounted() {
+    // создание заметки
     eventBus.$on('addColumn_1', ColumnCard => {
+
         if (this.column_1.length < 3) {
             this.errors.length = 0
             this.column_1.push(ColumnCard)
         } else {
             this.errors.length = 0
-            this.errors.push('макс коллво заметок в 1 столбце')
+            this.errors.push('Максимальное количество в первом столбце')
         }
             })
+
+    eventBus.$on('addColumn_2', ColumnCard => {
+        if (this.column_2.length < 5) {
+            this.errors.length = 0
+            this.column_2.push(ColumnCard)
+            this.column_1.splice(this.column_1.indexOf(ColumnCard), 1)
+        } else {
+            this.errors.length = 0
+            this.errors.push('Error')
         }
     })
+}
+})
