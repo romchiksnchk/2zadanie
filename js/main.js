@@ -49,3 +49,56 @@ mounted() {
     })
 }
 })
+
+
+
+Vue.component ('newcard', {
+    template:`
+    <section id="main" class="main-alt">
+    
+        <form class="row" @submit.prevent="Submit">
+        
+            <p class="main__text">Заметки</p>
+            <p class="error" v-for="error in errors">{{ error }}</p>
+        <div class="form__control">
+                
+            <div class="form__name">
+                <input required type="text" id="name" placeholder="Введите название заметки"/>
+            </div>
+            
+            <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
+            <input required type="text"  v-model="point_2" placeholder="Второй пункт"/>
+            <input required type="text"  v-model="point_3" placeholder="Третий пункт"/> 
+            <br>
+            <input type="text"  v-model="point_4"  placeholder="Четвертый пункт" v-show ="note4">
+            <br>
+             <input type="text" v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
+        </div>
+        <div class="plus_minus_p">
+        <p>Добавить или убавить поле для заметки</p>
+        </div>
+            <div class="minus_plus">
+                 
+                   <p class="plus">
+                        <button type='button' @click="addField"> + </button>
+                   </p>
+                   
+                   <p class="minus">
+                        <button type='button' @click="removeField"> - </button>
+                   </p>
+            </div>
+            
+            <div>                    
+                <p class="sub">
+                        <input type="submit" value="Отправить"> 
+                </p>
+            </div>
+        </div>
+            <div class="form__control">
+                <button class="btn">Отправить</button>
+            </div>
+        </form>
+    </section>
+    `,
+})
+data
