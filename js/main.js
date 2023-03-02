@@ -2,6 +2,7 @@ let eventBus = new Vue()
 
 
 
+
 Vue.component('column', {
     // колонки
     template: `
@@ -16,44 +17,52 @@ Vue.component('column', {
             </div>
  </section>
     `,
-    data(){
-        return{
-        column_1: [],
-        column_2: [],
-        column_3: [],
-        errrors: [],
+    data() {
+        return {
+            column_1: [],
+            column_2: [],
+            column_3: [],
+            errors: [],
+        }
+    },
+    mounted() {
+        // создание заметки
+        eventBus.$on('addColumn_1', ColumnCard => {
+
+            if (this.column_1.length < 3) {
+                this.errors.length = 0
+                this.column_1.push(ColumnCard)
+            } else {
+                this.errors.length = 0
+                this.errors.push('макс коллво заметок в 1 столбце')
+            }
+                })
+
+        eventBus.$on('addColumn_2', ColumnCard => {
+            if (this.column_2.length < 5) {
+                this.errors.length = 0
+                this.column_2.push(ColumnCard)
+                this.column_1.splice(this.column_1.indexOf(ColumnCard), 1)
+            } else {
+                this.errors.length = 0
+                this.errors.push('Вы не можете редактировать первую колонку, пока во второй есть 5 карточек.')
+            }
+        })
+        eventBus.$on('addColumn_3', ColumnCard => {
+            if (this.column_2.length === 5) {
+                this.errors.length = 0
+                this.column_3.push(ColumnCard)
+                this.column_2.splice(this.column_2.indexOf(ColumnCard), 1)
+            } else {
+                this.errors.length = 0
+                this.errors.push('шлепа')
+            }
+        })
     }
-},
-mounted() {
-    // создание заметки
-    eventBus.$on('addColumn_1', ColumnCard => {
-
-        if (this.column_1.length < 3) {
-            this.errors.length = 0
-            this.column_1.push(ColumnCard)
-        } else {
-            this.errors.length = 0
-            this.errors.push('Максимальное количество в первом столбце')
-        }
-            })
-
-    eventBus.$on('addColumn_2', ColumnCard => {
-        if (this.column_2.length < 5) {
-            this.errors.length = 0
-            this.column_2.push(ColumnCard)
-            this.column_1.splice(this.column_1.indexOf(ColumnCard), 1)
-        } else {
-            this.errors.length = 0
-            this.errors.push('Error')
-        }
-    })
-}
 })
 
-
-
-Vue.component ('newcard', {
-    template:`
+Vue.component('newCard', {
+        template: `
     <section id="main" class="main-alt">
     
         <form class="row" @submit.prevent="Submit">
@@ -100,64 +109,97 @@ Vue.component ('newcard', {
         </form>
     </section>
     `,
- 
-    data() {
-        return {
-            remark: false,
-            remark2: false,
-            name: null,
-            point_1: null,
-            point_2: null,
-            point_3: null,
-            point_4: null,
-            point_5:null,
-            date:null,
-        }
-    },
-    methods: {
-        addField() {
-            if (this.remark === false) {
-                console.log('1')
-                return this.remark = true
-            } else {
-                console.log('2')
-                return this.remark2 = true
+        data() {
+            return {
+                note4: false,
+                note5: false,
+                name: null,
+                point_1: null,
+                point_2: null,
+                point_3: null,
+                point_4: null,
+                point_5: null,
+                date: null,
             }
-
         },
-        removeField() {
+        
+        methods: {
+            addField() {
+                if (this.note4 === false) {
+                    console.log('1')
+                    return this.note4 = true
+                } else {
+                    console.log('2')
+                    return this.note5 = true
+                }
+            },
+            removeField() {
 
-            if (this.remark === true) {
-                return this.remark2 = false
+                if (this.note5 === true) {
+                    return this.note5 = false
+                }
+
+                if (this.note4 === true) {
+                    return this.note4 = false
+                }
+
+
+            },
+            Submit () {
+                let card ={
+                    name: this.name,
+                    points : [
+                        {name:this.point_1,},
+                        {name:this.point_2,},
+                        {name:this.point_3,},
+                        {name:this.point_4,},
+                        {name:this.point_5,},
+                    ],
+                    date: this.date,
+                    status: 0,
+                    errors: [],
+
+                }
             }
-
-            if (this.remark === true) {
-                return this.remark = false
-            }
+        }
+})
 
 
+Vue.component('column_1', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column column__one">
+                <div class="card" v-for="card in column_1"><p>{{ card.name }}</p>
+                    <div class="tasks" v-for="task in card.points"
+                        v-if="task.name != null"
+                        @click="changeCompleted(card, task)"
+                        :class="{completed: task.completed}">
+                        {{ task.name }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    `,
+
+    props: {
+        column_1: {
+            type: Array,
+        },
+        column_2: {
+            type: Array,
+        },
+        card: {
+            type: Object,
+        },
+        errors: {
+            type: Array,
         }
     },
-    Submit() {
-        let card = {
-            name: this.name,
-            points: [
-                {name: this.point_1},
-                {name: this.point_2},
-                {name: this.point_3},
-                {name: this.point_4},
-                {name: this.point_5},
-            ],
-            date: this.date,
-            status: 0,
-            errors:[],
-        }
-        eventBus.$emit('addColumn_1', card)
-                    this.name = null;
-                    this.point_1 = null
-                    this.point_2 = null
-                    this.point_3 = null
-                    this.point_4 = null
-                    this.point_5 = null
-    }
+})
+
+
+
+
+let app = new Vue({
+    el: '#app',
 })
