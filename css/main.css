@@ -1,12 +1,19 @@
 *{
     box-sizing: border-box;
 }
+
+body{
+    background-color: rgba(86, 133, 133, 0.84);
+    font-family: ARIAl;
+}
+
 .error {
     font-size:25px;
     text-align: center;
     background-color: #e74747;
     color: #ffffff;
 }
+
 .column {
     float: left;
     width: 33.33%;
@@ -27,12 +34,26 @@
 .main__text{
     text-align: center;
     font-size: 40px;
+    letter-spacing: 5px;
 }
 .form__control{
     text-align: center;
+}
+button {
+    background-color: #f50000;
+    height: 33px;
+    width: 10%;
+    color: white;
+    font-size: 25px;
+}
+.sub{
+text-align: center;
+}
+.plus_minus_p{
+    font-size: 25px;
 
 }
- 
+
  /* body {
     font-family: tahoma;
     color:#282828;

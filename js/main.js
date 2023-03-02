@@ -24,8 +24,9 @@ Vue.component('column', {
     mounted() {
         // создание заметки
         eventBus.$on('addColumn_1', ColumnCard => {
+            //кол-во заметок можно в первом столбце
 
-            if (this.column_1.length < 3) {
+            if (this.column_1.length <= 5) {
                 this.errors.length = 0
                 this.column_1.push(ColumnCard)
             } else {
@@ -33,7 +34,7 @@ Vue.component('column', {
                 this.errors.push('Максимально количество заявок в столбце (3)')
             }
                 })
-
+//кол-во заметок можно во втором столбце
         eventBus.$on('addColumn_2', ColumnCard => {
             if (this.column_2.length < 5) {
                 this.errors.length = 0
@@ -44,6 +45,7 @@ Vue.component('column', {
                 this.errors.push('Вы не можете редактировать первую колонку, пока во второй есть 5 карточек.')
             }
         })
+        //кол-во заметок можно в третьем столбце
         eventBus.$on('addColumn_3', ColumnCard => {
             if (this.column_2.length === 5) {
                 this.errors.length = 0
@@ -65,28 +67,28 @@ Vue.component('newCard', {
         
             <p class="main__text">Заметки</p>
             <p class="error" v-for="error in errors">{{ error }}</p>
+       
         <div class="form__control">
-                
             <div class="form__name">
-                <input required type="text" id="name"  placeholder="Введите название заметки"/>
+                <input required type="text" id="name" placeholder="Введите название заметки"/>
             </div>
             
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
             <input required type="text"  v-model="point_2" placeholder="Второй пункт"/>
             <input required type="text"  v-model="point_3" placeholder="Третий пункт"/> 
             <br>
-            <input type="text"  v-model="point_4"  placeholder="Четвертый пункт" v-show ="note4">
+            <input class="Punkt" type="text"  v-model="point_4"  placeholder="Четвертый пункт" v-show ="note4">
             <br>
-             <input type="text"  v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
+             <input class="Punkt" type="text"  v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
         </div>
        <div class="plus_minus_p">
             <p>Добавить/удалить поле для заметки</p>
             </div>
             <div class="minus_plus">
                  
-                   <p class="plus">
+                   <div class="plus">
                         <button type='button' @click="addField"> + </button>
-                   </p>
+                   </div>
                    
                    <p class="minus">
                         <button type='button' @click="removeField"> - </button>
@@ -98,8 +100,7 @@ Vue.component('newCard', {
                         <input type="submit" value="Отправить"> 
                 </p>
             </div>
-            <div class="form__control">
-            </div>
+            
         </form>
     </section>
     `,
@@ -107,7 +108,7 @@ Vue.component('newCard', {
         return {
             note4: false,
             note5: false,
-            name: null,
+            name: [],
             point_1: null,
             point_2: null,
             point_3: null,
@@ -142,7 +143,7 @@ Vue.component('newCard', {
 
         Submit() {
             let card = {
-                name: this.name,
+                name:this.name,
                 points: [
                     {name: this.point_1,},
                     {name: this.point_2,},
