@@ -68,7 +68,7 @@ Vue.component('newCard', {
         <div class="form__control">
                 
             <div class="form__name">
-                <input required type="text" id="name" style="color: #E55A3C" placeholder="Введите название заметки"/>
+                <input required type="text" id="name"  placeholder="Введите название заметки"/>
             </div>
             
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
@@ -80,7 +80,7 @@ Vue.component('newCard', {
              <input type="text"  v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
         </div>
        <div class="plus_minus_p">
-            <p style="color:#E55A3C">Добавить/удалить поле для заметки</p>
+            <p>Добавить/удалить поле для заметки</p>
             </div>
             <div class="minus_plus">
                  
