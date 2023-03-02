@@ -100,5 +100,64 @@ Vue.component ('newcard', {
         </form>
     </section>
     `,
+ 
+    data() {
+        return {
+            remark: false,
+            remark2: false,
+            name: null,
+            point_1: null,
+            point_2: null,
+            point_3: null,
+            point_4: null,
+            point_5:null,
+            date:null,
+        }
+    },
+    methods: {
+        addField() {
+            if (this.remark === false) {
+                console.log('1')
+                return this.remark = true
+            } else {
+                console.log('2')
+                return this.remark2 = true
+            }
+
+        },
+        removeField() {
+
+            if (this.remark === true) {
+                return this.remark2 = false
+            }
+
+            if (this.remark === true) {
+                return this.remark = false
+            }
+
+
+        }
+    },
+    Submit() {
+        let card = {
+            name: this.name,
+            points: [
+                {name: this.point_1},
+                {name: this.point_2},
+                {name: this.point_3},
+                {name: this.point_4},
+                {name: this.point_5},
+            ],
+            date: this.date,
+            status: 0,
+            errors:[],
+        }
+        eventBus.$emit('addColumn_1', card)
+                    this.name = null;
+                    this.point_1 = null
+                    this.point_2 = null
+                    this.point_3 = null
+                    this.point_4 = null
+                    this.point_5 = null
+    }
 })
-data
