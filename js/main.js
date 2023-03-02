@@ -58,7 +58,7 @@ Vue.component('column', {
 })
 
 Vue.component('newCard', {
-        template: `
+    template: `
     <section id="main" class="main-alt">
     
         <form class="row" @submit.prevent="Submit">
@@ -68,7 +68,7 @@ Vue.component('newCard', {
         <div class="form__control">
                 
             <div class="form__name">
-                <input required type="text" id="name" placeholder="Введите название заметки"/>
+                <input required type="text" id="name" style="color: #E55A3C" placeholder="Введите название заметки"/>
             </div>
             
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
@@ -77,12 +77,13 @@ Vue.component('newCard', {
             <br>
             <input type="text"  v-model="point_4"  placeholder="Четвертый пункт" v-show ="note4">
             <br>
-             <input type="text" v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
+             <input type="text"  v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
         </div>
-        <div class="plus_minus_p">
-        <p>Добавить или убавить поле для заметки</p>
-        </div>
+       <div class="plus_minus_p">
+            <p style="color:#E55A3C">Добавить/удалить поле для заметки</p>
+            </div>
             <div class="minus_plus">
+                 
                    <p class="plus">
                         <button type='button' @click="addField"> + </button>
                    </p>
@@ -97,74 +98,72 @@ Vue.component('newCard', {
                         <input type="submit" value="Отправить"> 
                 </p>
             </div>
-        </div>
             <div class="form__control">
-                <button class="btn">Отправить</button>
             </div>
         </form>
     </section>
     `,
-        data() {
-            return {
-                remark: false,
-                remark2: false,
-                name: null,
-                point_1: null,
-                point_2: null,
-                point_3: null,
-                point_4: null,
-                point_5: null,
-                date: null,
+    data() {
+        return {
+            note4: false,
+            note5: false,
+            name: null,
+            point_1: null,
+            point_2: null,
+            point_3: null,
+            point_4: null,
+            point_5: null,
+            date: null,
+        }
+    },
+    methods: {
+        addField() {
+            if (this.note4 === false) {
+                console.log('1')
+                return this.note4 = true
+            } else {
+                console.log('2')
+                return this.note5 = true
             }
+
         },
-        methods: {
-            addField() {
-                if (this.remark === false) {
-                    console.log('1')
-                    return this.remark = true
-                } else {
-                    console.log('2')
-                    return this.remark2 = true
-                }
+        removeField() {
 
-            },
-            removeField() {
-
-                if (this.remark2 === true) {
-                    return this.remark2 = false
-                }
-
-                if (this.remark === true) {
-                    return this.remark = false
-                }
-
-
-            },
-
-            Submit() {
-                    let card = {
-                        name: this.name,
-                        points: [
-                            {name: this.point_1,},
-                            {name: this.point_2,},
-                            {name: this.point_3,},
-                            {name: this.point_4,},
-                            {name: this.point_5,}
-                        ],
-                        date: this.date,
-                        // date: null,
-                        status: 0,
-                        errors: [],
-                    }
-                    eventBus.$emit('addColumn_1', card)
-                    this.name = null;
-                    this.point_1 = null
-                    this.point_2 = null
-                    this.point_3 = null
-                    this.point_4 = null
-                    this.point_5 = null
-                }
+            if (this.note5 === true) {
+                return this.note5 = false
             }
+
+            if (this.note4 === true) {
+                return this.note4 = false
+            }
+
+
+        },
+
+        Submit() {
+            let card = {
+                name: this.name,
+                points: [
+                    {name: this.point_1,},
+                    {name: this.point_2,},
+                    {name: this.point_3,},
+                    {name: this.point_4,},
+                    {name: this.point_5,}
+                ],
+                date: this.date,
+                // date: null,
+                status: 0,
+                errors: [],
+            }
+            eventBus.$emit('addColumn_1', card)
+            this.name = null;
+            this.point_1 = null
+            this.point_2 = null
+            this.point_3 = null
+            this.point_4 = null
+            this.point_5 = null
+        }
+    }
 
 })
 
@@ -257,7 +256,6 @@ Vue.component('column_3', {
                         :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
-<!--                        <p>{{ card.date }}</p>-->
                 </div>
             </div>
         </section>
@@ -271,6 +269,7 @@ Vue.component('column_3', {
         },
     },
 })
+
 
 
 
