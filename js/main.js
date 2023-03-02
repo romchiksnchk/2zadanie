@@ -1,13 +1,9 @@
 let eventBus = new Vue()
-
-
-
-
+// Колонки 
 Vue.component('column', {
-    // колонки
+
     template: `
  <section id="main" class="main-alt">
- 
         <div class="columns">
             <newCard></newCard>
         <p class="error" v-for="error in errors">{{ error }}</p>
@@ -34,7 +30,7 @@ Vue.component('column', {
                 this.column_1.push(ColumnCard)
             } else {
                 this.errors.length = 0
-                this.errors.push('макс коллво заметок в 1 столбце')
+                this.errors.push('Максимально количество заявок в столбце (3)')
             }
                 })
 
@@ -55,7 +51,7 @@ Vue.component('column', {
                 this.column_2.splice(this.column_2.indexOf(ColumnCard), 1)
             } else {
                 this.errors.length = 0
-                this.errors.push('шлепа')
+                this.errors.push('Error')
             }
         })
     }
@@ -87,7 +83,6 @@ Vue.component('newCard', {
         <p>Добавить или убавить поле для заметки</p>
         </div>
             <div class="minus_plus">
-                 
                    <p class="plus">
                         <button type='button' @click="addField"> + </button>
                    </p>
@@ -111,8 +106,8 @@ Vue.component('newCard', {
     `,
         data() {
             return {
-                note4: false,
-                note5: false,
+                remark: false,
+                remark2: false,
                 name: null,
                 point_1: null,
                 point_2: null,
@@ -122,48 +117,56 @@ Vue.component('newCard', {
                 date: null,
             }
         },
-        
         methods: {
             addField() {
-                if (this.note4 === false) {
+                if (this.remark === false) {
                     console.log('1')
-                    return this.note4 = true
+                    return this.remark = true
                 } else {
                     console.log('2')
-                    return this.note5 = true
+                    return this.remark2 = true
                 }
+
             },
             removeField() {
 
-                if (this.note5 === true) {
-                    return this.note5 = false
+                if (this.remark2 === true) {
+                    return this.remark2 = false
                 }
 
-                if (this.note4 === true) {
-                    return this.note4 = false
+                if (this.remark === true) {
+                    return this.remark = false
                 }
 
 
             },
-            Submit () {
-                let card ={
-                    name: this.name,
-                    points : [
-                        {name:this.point_1,},
-                        {name:this.point_2,},
-                        {name:this.point_3,},
-                        {name:this.point_4,},
-                        {name:this.point_5,},
-                    ],
-                    date: this.date,
-                    status: 0,
-                    errors: [],
 
+            Submit() {
+                    let card = {
+                        name: this.name,
+                        points: [
+                            {name: this.point_1,},
+                            {name: this.point_2,},
+                            {name: this.point_3,},
+                            {name: this.point_4,},
+                            {name: this.point_5,}
+                        ],
+                        date: this.date,
+                        // date: null,
+                        status: 0,
+                        errors: [],
+                    }
+                    eventBus.$emit('addColumn_1', card)
+                    this.name = null;
+                    this.point_1 = null
+                    this.point_2 = null
+                    this.point_3 = null
+                    this.point_4 = null
+                    this.point_5 = null
                 }
             }
-        }
-})
 
+})
 
 Vue.component('column_1', {
     template: `
@@ -180,7 +183,6 @@ Vue.component('column_1', {
             </div>
         </section>
     `,
-
     props: {
         column_1: {
             type: Array,
@@ -195,8 +197,80 @@ Vue.component('column_1', {
             type: Array,
         }
     },
+    methods: {
+        changeCompleted(card) {
+            eventBus.$emit('addColumn_2', card)
+
+        }
+    }
+    //         if ((card.status / count) * 100 === 100) {
+    //             // card.date = new Date().toLocaleString()
+    //             eventBus.$emit('addColumn_3', card)
+    //         }
+    //     },
+    // },
+
 })
 
+Vue.component('column_2', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column column__two">
+                <div class="card" v-for="card in column_2"><p>{{ card.name }}</p>
+                    <div class="tasks" v-for="task in card.points"
+                        v-if="task.name != null"
+                        @click="changeCompleted(card, task)"
+                        :class="{completed: task.completed}">
+                        {{ task.name }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+        column_2: {
+            type: Array,
+        },
+        column_3: {
+            type: Array,
+        },
+        card: {
+            type: Object,
+        },
+    },
+    methods: {
+        changeCompleted(card, task) {
+                eventBus.$emit('addColumn_3', card)
+            }
+        }
+
+})
+
+Vue.component('column_3', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column column__three">
+                <div class="card" v-for="card in column_3"><p>{{ card.name }}</p>
+                    <div class="tasks" v-for="task in card.points"
+                        v-if="task.name != null"
+                        @click="changeCompleted(card, task)"
+                        :class="{completed: task.completed}">
+                        {{ task.name }}
+                    </div>
+<!--                        <p>{{ card.date }}</p>-->
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+        column_3: {
+            type: Array,
+        },
+        card: {
+            type: Object,
+        },
+    },
+})
 
 
 

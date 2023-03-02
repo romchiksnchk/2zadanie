@@ -1,4 +1,28 @@
- body {
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: auto;
+    border: 3px solid black;
+    background: white;
+    text-align: center;
+}
+.minus_plus {
+
+}
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ /* body {
     font-family: tahoma;
     color:#282828;
     margin: 0px;
@@ -90,4 +114,4 @@ textarea {
 .activeTab {
     color: #16C0B0;
     text-decoration: underline;
-} 
+}  */
