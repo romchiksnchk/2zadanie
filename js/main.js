@@ -22,10 +22,9 @@ Vue.component('column', {
         }
     },
     mounted() {
-        // создание заметки
+// создание заметки
+//кол-во заметок можно в первом столбце
         eventBus.$on('addColumn_1', ColumnCard => {
-            //кол-во заметок можно в первом столбце
-
             if (this.column_1.length <= 5) {
                 this.errors.length = 0
                 this.column_1.push(ColumnCard)
@@ -45,7 +44,7 @@ Vue.component('column', {
                 this.errors.push('Вы не можете редактировать первую колонку, пока во второй есть 5 карточек.')
             }
         })
-        //кол-во заметок можно в третьем столбце
+//кол-во заметок можно в третьем столбце
         eventBus.$on('addColumn_3', ColumnCard => {
             if (this.column_2.length === 5) {
                 this.errors.length = 0
@@ -62,17 +61,14 @@ Vue.component('column', {
 Vue.component('newCard', {
     template: `
     <section id="main" class="main-alt">
-    
         <form class="row" @submit.prevent="Submit">
-        
             <p class="main__text">Заметки</p>
             <p class="error" v-for="error in errors">{{ error }}</p>
        
         <div class="form__control">
-            <div class="form__name">
-                <input required type="text" id="name" placeholder="Введите название заметки"/>
+           <div class="form__main">
+            <input requiared type="text" v-model="point_0" placeholder="Введите название заметки"/>
             </div>
-            
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
             <input required type="text"  v-model="point_2" placeholder="Второй пункт"/>
             <input required type="text"  v-model="point_3" placeholder="Третий пункт"/> 
@@ -81,6 +77,7 @@ Vue.component('newCard', {
             <br>
              <input class="Punkt" type="text"  v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
         </div>
+        
        <div class="plus_minus_p">
             <p>Добавить/удалить поле для заметки</p>
             </div>
@@ -108,7 +105,8 @@ Vue.component('newCard', {
         return {
             note4: false,
             note5: false,
-            name: [],
+            name: null,
+            point_0: null,
             point_1: null,
             point_2: null,
             point_3: null,
@@ -145,6 +143,7 @@ Vue.component('newCard', {
             let card = {
                 name:this.name,
                 points: [
+                    {name: this.point_0,},
                     {name: this.point_1,},
                     {name: this.point_2,},
                     {name: this.point_3,},
@@ -158,6 +157,7 @@ Vue.component('newCard', {
             }
             eventBus.$emit('addColumn_1', card)
             this.name = null;
+            this.point_0 = null
             this.point_1 = null
             this.point_2 = null
             this.point_3 = null
@@ -217,10 +217,8 @@ Vue.component('column_2', {
         <section id="main" class="main-alt">
             <div class="column column__two">
                 <div class="card" v-for="card in column_2"><p>{{ card.name }}</p>
-                    <div class="tasks" v-for="task in card.points"
-                        v-if="task.name != null"
-                        @click="changeCompleted(card, task)"
-                        :class="{completed: task.completed}">
+                    <div class="tasks" v-for="task in card.points" v-if="task.name != null" @click="changeCompleted(card, task)"
+                     :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
                 </div>
