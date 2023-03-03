@@ -6,16 +6,22 @@
     box-sizing: border-box;
 }
 
-/* .tasks {
+
+
+.a{
+    text-decoration: none;
     font-size: 20px;
       
 }
-.tasks:not(:first-child){
+.a:not(:first-child){
     margin-left: 10px;
 }
 .active{
     text-decoration:line-through ;
-} */
+}
+
+
+
 
 body{
     background-color: rgba(2, 176, 118, 0.84);
