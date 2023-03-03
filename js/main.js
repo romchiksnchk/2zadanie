@@ -8,7 +8,9 @@ Vue.component('column', {
             <newCard></newCard>
         <p class="error" v-for="error in errors">{{ error }}</p>
                 <column_1 :column_1="column_1"></column_1>
+                
                 <column_2 :column_2="column_2"></column_2>
+
                 <column_3 :column_3="column_3"></column_3>
             </div>
  </section>
@@ -63,6 +65,15 @@ Vue.component('column', {
 
 
 
+// let elems = [...document.querySelectorAll("columns")];
+// for (let i = 0; i < elems.length; i++) {
+//   elems[i].onclick = function(e) {
+//     e.preventDefault();
+//     this.classList.add("active");
+//   }
+// }
+
+
 Vue.component('newCard', {
     template: `
     <section id="main" class="main-alt">
@@ -88,14 +99,13 @@ Vue.component('newCard', {
        <div class="plus_minus_p">
             <p>Добавить/удалить поле для заметки</p>
             </div>
+           
             <div class="minus_plus">
-                 
                    <div class="plus">
-                        <button type='button' @click="addField"> + </button>
-                   </div>
-                   
+                        <button class="plus" type='button' @click="addField"> + </button>
+            </div>
                    <p class="minus">
-                        <button type='button' @click="removeField"> - </button>
+                        <button class="minus" type='button' @click="removeField"> - </button>
                    </p>
             </div>
             
@@ -263,16 +273,10 @@ Vue.component('column_3', {
                         :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
-                   
-                   
-                   
-                   
+
                     <ul>
                     <li class="tasks" v-if="card.edit != null">Последнее изменение: {{ card.edit}}</li>
                      </ul>
-                
-                
-                
                      </div>
             </div>
         </section>

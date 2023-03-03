@@ -1,13 +1,24 @@
+
+.active{
+    text-decoration: line-through;
+}
 *{
     box-sizing: border-box;
 }
 
-.tasks {
+/* .tasks {
     font-size: 20px;
-    
+      
 }
+.tasks:not(:first-child){
+    margin-left: 10px;
+}
+.active{
+    text-decoration:line-through ;
+} */
+
 body{
-    background-color: rgba(86, 133, 133, 0.84);
+    background-color: rgba(2, 176, 118, 0.84);
     font-family: ARIAl;
 }
 
@@ -27,9 +38,7 @@ body{
     background: white;
     text-align: center;
 }
-.minus_plus {
 
-}
 @media screen and (max-width: 600px) {
     .column {
         width: 100%;
@@ -43,19 +52,31 @@ body{
 .form__control{
     text-align: center;
 }
-button {
-    background-color: #f50000;
+
+.plus{
     height: 33px;
-    width: 10%;
-    color: white;
-    font-size: 25px;
+    width: 105px;
 }
+.minus{
+    height: 33px;
+    width: 105px;
+    
+}
+.minus:hover{
+    background-color: #e74747;
+    color: whitesmoke;
+}
+
+.plus:hover{
+    background-color: rgb(104, 182, 104);
+    color: whitesmoke;
+}
+
 .sub{
 text-align: center;
 }
 .plus_minus_p{
-    font-size: 25px;
-
+    font-size: 15px;
 }
 
  /* body {
