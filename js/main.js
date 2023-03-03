@@ -53,10 +53,15 @@ Vue.component('column', {
             } else {
                 this.errors.length = 0
                 this.errors.push('Error')
-            }
+            }   
+                card.comdate = new Date().toLocaleDateString()
+                console.log(card.comdate)
+                console.log(card.deadline)
         })
     }
 })
+
+
 
 Vue.component('newCard', {
     template: `
@@ -66,9 +71,11 @@ Vue.component('newCard', {
             <p class="error" v-for="error in errors">{{ error }}</p>
        
         <div class="form__control">
-           <div class="form__main">
+           
+        <div class="form__main">
             <input requiared type="text" v-model="point_0" placeholder="Введите название заметки"/>
-            </div>
+            
+</div>
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
             <input required type="text"  v-model="point_2" placeholder="Второй пункт"/>
             <input required type="text"  v-model="point_3" placeholder="Третий пункт"/> 
@@ -239,6 +246,7 @@ Vue.component('column_2', {
     methods: {
         changeCompleted(card, task) {
                 eventBus.$emit('addColumn_3', card)
+                card.edit = new Date().toLocaleString()
             }
         }
 
@@ -255,7 +263,17 @@ Vue.component('column_3', {
                         :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
-                </div>
+                   
+                   
+                   
+                   
+                    <ul>
+                    <li class="tasks" v-if="card.edit != null">Последнее изменение: {{ card.edit}}</li>
+                     </ul>
+                
+                
+                
+                     </div>
             </div>
         </section>
     `,
@@ -268,7 +286,6 @@ Vue.component('column_3', {
         },
     },
 })
-
 
 
 
