@@ -24,18 +24,16 @@ Vue.component('column', {
         }
     },
     mounted() {
-// создание заметки
-//кол-во заметок можно в первом столбце
         eventBus.$on('addColumn_1', ColumnCard => {
-            if (this.column_1.length <= 5) {
+
+            if (this.column_1.length < 3) {
                 this.errors.length = 0
                 this.column_1.push(ColumnCard)
             } else {
                 this.errors.length = 0
-                this.errors.push('Максимально количество заявок в столбце (3)')
+                this.errors.push('макс коллво заметок в 1 столбце')
             }
-                })
-//кол-во заметок можно во втором столбце
+        })
         eventBus.$on('addColumn_2', ColumnCard => {
             if (this.column_2.length < 5) {
                 this.errors.length = 0
@@ -46,19 +44,10 @@ Vue.component('column', {
                 this.errors.push('Вы не можете редактировать первую колонку, пока во второй есть 5 карточек.')
             }
         })
-//кол-во заметок можно в третьем столбце
         eventBus.$on('addColumn_3', ColumnCard => {
-            if (this.column_2.length === 5) {
-                this.errors.length = 0
-                this.column_3.push(ColumnCard)
-                this.column_2.splice(this.column_2.indexOf(ColumnCard), 1)
-            } else {
-                this.errors.length = 0
-                this.errors.push('Error')
-            }   
-                card.comdate = new Date().toLocaleDateString()
-                console.log(card.comdate)
-                console.log(card.deadline)
+            this.column_3.push(ColumnCard)
+            this.column_2.splice(this.column_2.indexOf(ColumnCard), 1)
+
         })
     }
 })
@@ -89,9 +78,9 @@ Vue.component('newCard', {
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
             <input required type="text"  v-model="point_2" placeholder="Второй пункт"/>
             <input required type="text"  v-model="point_3" placeholder="Третий пункт"/> 
-            <br>
+            
             <input class="Punkt" type="text"  v-model="point_4"  placeholder="Четвертый пункт" v-show ="note4">
-            <br>
+            
              <input class="Punkt" type="text"  v-model="point_5"  placeholder="Пятый пункт" v-show="note5">
         </div>
         
@@ -189,7 +178,6 @@ Vue.component('column_1', {
         <section id="main" class="main-alt">
             <div class="column column__one">
                 <div class="card" v-for="card in column_1"><p>{{ card.name }}</p>
-                <p>Сонечка</p>
                     <div class="tasks" v-for="task in card.points"
                         v-if="task.name != null"
                         @click="changeCompleted(card, task)"
