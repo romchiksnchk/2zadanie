@@ -50,40 +50,19 @@ body{
         width: 100%;
     }
 }
-.main__text{
+.main_text{
     text-align: center;
     font-size: 40px;
     letter-spacing: 5px;
 }
-.form__control{
+.form_control {
     text-align: center;
 }
 
-.plus{
-    height: 33px;
-    width: 105px;
-}
-.minus{
-    height: 33px;
-    width: 105px;
-    
-}
-.minus:hover{
-    background-color: #e74747;
-    color: whitesmoke;
+.sub {
+    text-align: center;
 }
 
-.plus:hover{
-    background-color: rgb(104, 182, 104);
-    color: whitesmoke;
-}
-
-.sub{
-text-align: center;
-}
-.plus_minus_p{
-    font-size: 15px;
-}
 
  /* body {
     font-family: tahoma;
