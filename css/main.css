@@ -62,7 +62,9 @@ body{
 .sub {
     text-align: center;
 }
-
+.completed {
+    text-decoration: line-through;
+}
 
  /* body {
     font-family: tahoma;
